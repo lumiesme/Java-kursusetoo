@@ -3,14 +3,17 @@ package controllers;
 import controllers.listeners.*;
 import models.Model;
 import views.View;
+import models.Database;
 
 public class Controller {
-     private final Model model;
-     private final View view;
+    private final Model model;
+    private final View view;
+    private final Database database;
 
     public Controller(Model model, View view) {
-         this.model = model;
-         this.view = view;
+        this.model = model;
+        this.view = view;
+        this.database = new Database(model);
 
         view.registerButtonScores(new ButtonScores(model, view)); // Make a Leaderboard ActionListener for the button
         view.registerButtonNew(new ButtonNew(model, view)); // Make a New Game ActionListener for the button

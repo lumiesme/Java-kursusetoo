@@ -38,6 +38,9 @@ public class Model {
     private String playerName;
     public int countMissedWords;
 
+
+
+
     /**
      * During the creation of the model, the names of the categories to be shown in the combobox are known
      */
@@ -45,6 +48,7 @@ public class Model {
         new Database(this);
         dataWords = new ArrayList<>();
         fetchWordsFromDatabase(); // Populate the dataWords list with data from the database
+
     }
 
     /**
@@ -176,6 +180,8 @@ public class Model {
         this.imageId = imageId;
     }
 
+
+
     /**
      * Returns the selected category
      * @return selected category
@@ -250,12 +256,13 @@ public class Model {
         return joiner.toString();
     }
     public void askPlayerName() {
-        playerName = JOptionPane.showInputDialog("Sisesta oma nimi");
-        if (playerName.length() < 2) {
-            askPlayerName();
-
+        playerName = JOptionPane.showInputDialog("Enter your name");
+        if (playerName == null || playerName.trim().isEmpty()) {
+            playerName = "Unknown";
         }
     }
+
+
 
 }
 

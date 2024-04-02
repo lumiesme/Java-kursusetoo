@@ -2,7 +2,6 @@ package controllers.listeners;
 
 import models.Model;
 import views.View;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,25 +25,22 @@ public class ButtonNew implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.hideNewButtons(); // Set access to buttons and text field
-        model.setImageId(0);  // set image id 0
-        ButtonSend.guessedLetters.clear();  //clear the guessed letters list
-        view.getRealDateTime().stop(); // "Stop" real time
-        if(!view.getGameTime().isRunning()) { // If gameTime not running
-            view.getGameTime().setSeconds(0);
-            view.getGameTime().setMinutes(0);
-            view.getGameTime().setRunning(true); // Set game running
-            view.getGameTime().startTimer(); // Start game time
-        } else { // gameTime is running
-            view.getGameTime().stopTimer(); // Stop gameTime
-            view.getGameTime().setRunning(false); // set game not running
-        }
+        // Reset game state
+        model.setImageId(0); // Reset image id
+        ButtonSend.guessedLetters.clear(); // Clear guessed letters list
+        view.getRealDateTime().stop(); // Stop real time
+        view.getGameTime().stopTimer(); // Stop gameTime if running
+        view.getGameTime().setSeconds(0); // Reset timer seconds
+        view.getGameTime().setMinutes(0); // Reset timer minutes
+        model.setCountMissedWords(0); // Reset count of missed words
 
+        // Set up new game
+        view.hideNewButtons(); // Set access to buttons and text field
         view.getTxtChar().requestFocus(); // After pressing New Game, the input box becomes active
-        view.setNewImage(0);
+        view.setNewImage(0); // Set initial image
         String selectedCategory = view.getCmbCategory().getSelectedItem().toString();
-        model.generatedWordFromCategoriesList(selectedCategory);
+        model.generatedWordFromCategoriesList(selectedCategory); // Generate new word
         String wordOfNew = model.addSpaceBetween(String.valueOf(model.getWordNewOfLife()));
-        view.getLblResult().setText(wordOfNew);
+        view.getLblResult().setText(wordOfNew); // Display new word
     }
 }
